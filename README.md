@@ -1,2 +1,3 @@
-# golang-std-lib
-study golang stdandard lib
+# golang-lib
+
+study golang lib
