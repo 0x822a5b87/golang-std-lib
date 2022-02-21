@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: flink
+metadata:
+  enable-checkpoint: true
+  labels:
+    authority: db_write
+    location: sz
+name: flink-kafka-write2-es-xxx
+spec:
+  deploy:
+    class: com.stream.KafkaWrite2RedisJob
+    jar: FlinkStream.jar
+    type: jar
+  enable-checkpoint: true
+  monitor:
+  - host: tglog.sh
+    port: 33088
+    type: xxx
+  sink:
+  - auth: xxx
+    db: xxx
+    host: xxx-redis
+    port: 6379
+    type: redis
+  sources:
+  - id: 202
+    topic: xxx
+    type: kafka
+  - id: 203
+    topic: xxx
+    type: kafka
+  - id: 204
+    topic: xxx
+    type: kafka
+  - id: 205
+    topic: xxx
+    type: kafka
