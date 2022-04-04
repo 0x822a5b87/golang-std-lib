@@ -1,9 +1,9 @@
 package main
 
 import (
-	"gin/albums"
+	"gin/blog/runtime"
 )
 
 func main() {
-	albums.Server()
+	runtime.Server()
 }
