@@ -74,6 +74,52 @@ require example.com/greetings v0.0.0-00010101000000-000000000000
 go mod tidy
 ```
 
+## Tutorial: Getting started with multi-module workspaces
+
+> With multi-module workspaces, you can tell the Go command that you’re writing code in multiple modules at the same time and easily build and run code in those modules.
+
+### create workspace and first module
+
+```bash
+mkdir workspace
+cd workspace
+
+mkdir hello
+cd hello
+go mod init example.com/hello
+#go: creating new go.mod: module example.com/hello
+
+go get golang.org/x/example
+```
+
+```go
+package main
+
+import (
+    "fmt"
+
+    "golang.org/x/example/stringutil"
+)
+
+func main() {
+    fmt.Println(stringutil.Reverse("Hello"))
+}
+```
+
+### Create the workspace
+
+```bash
+go work init ./hello
+```
+
+### Download and modify the `golang.org/x/example` module
+
+```go
+git clone https://go.googlesource.com/example
+go work use ./example
+
+```
+
 
 
 ## Naming a module
