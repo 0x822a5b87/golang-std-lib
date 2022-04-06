@@ -117,8 +117,122 @@ go work init ./hello
 ```go
 git clone https://go.googlesource.com/example
 go work use ./example
-
 ```
+
+## Tutorial: Getting started with fuzzing
+
+> In this tutorial, you’ll write a fuzz test for a simple function, run the go command, and debug and fix issues in the code.
+
+```go
+package main
+
+import "fmt"
+
+func Reverse(s string) string {
+	b := []byte(s)
+	for i, j := 0, len(b)-1; i < len(b)/2; i, j = i+1, j-1 {
+		b[i], b[j] = b[j], b[i]
+	}
+	return string(b)
+}
+
+func main() {
+	input := "The quick brown fox jumped over the lazy dog"
+	rev := Reverse(input)
+	doubleRev := Reverse(rev)
+	fmt.Printf("original: %q\n", input)
+	fmt.Printf("reversed: %q\n", rev)
+	fmt.Printf("reversed again: %q\n", doubleRev)
+}
+```
+
+```go
+package main
+
+import (
+	"testing"
+)
+
+func TestReverse(t *testing.T) {
+	testcases := []struct {
+		in, want string
+	}{
+		{"Hello, world", "dlrow ,olleH"},
+		{" ", " "},
+		{"!12345", "54321!"},
+	}
+	for _, tc := range testcases {
+		rev := Reverse(tc.in)
+		if rev != tc.want {
+			t.Errorf("Reverse: %q, want %q", rev, tc.want)
+		}
+	}
+}
+```
+
+### Add a fuzz test
+
+> The unit test has limitations, namely that each input must be added to the test by the developer. 
+>
+> **One benefit of fuzzing is that it comes up with inputs for your code, and may identify edge cases that the test cases you came up with didn’t reach.**
+
+```go
+func FuzzReverse(f *testing.F) {
+	testcases := []string{"Hello, world", " ", "!12345"}
+	for _, tc := range testcases {
+		f.Add(tc)  // Use f.Add to provide a seed corpus
+	}
+	f.Fuzz(func(t *testing.T, orig string) {
+		rev := Reverse(orig)
+		doubleRev := Reverse(rev)
+		if orig != doubleRev {
+			t.Errorf("Before: %q, after: %q", orig, doubleRev)
+		}
+		if utf8.ValidString(orig) && !utf8.ValidString(rev) {
+			t.Errorf("Reverse produced invalid UTF-8 string %q", rev)
+		}
+	})
+}
+```
+
+#### Run test code
+
+```bash
+go test -fuzz=Fuzz
+```
+
+>fuzz: elapsed: 0s, gathering baseline coverage: 0/17 completed
+>failure while testing seed corpus entry: FuzzReverse/7d02a7200a7179081b177bc32614070b667f0b30d47a72630b631308f2fd781a
+>fuzz: elapsed: 0s, gathering baseline coverage: 3/17 completed
+>--- FAIL: FuzzReverse (0.03s)
+>--- FAIL: FuzzReverse (0.00s)
+>  reverse_test.go:36: Reverse produced invalid UTF-8 string "\xbc\xc6"
+>
+>
+>
+>FAIL
+>exit status 1
+>FAIL    example/fuzz    0.411s
+
+### Fix the invalid string error
+
+> The current `Reverse` function reverses the string byte-by-byte, and therein lies our problem. In order to preserve the UTF-8-encoded runes of the original string, we must instead reverse the string rune-by-rune.
+>
+> 
+>
+> To examine why the input (in this case, the Chinese character `泃`) is causing `Reverse` to produce an invalid string when reversed, you can inspect the number of runes in the reversed string.
+
+```go
+func Reverse(s string) string {
+    r := []rune(s)
+    for i, j := 0, len(r)-1; i < len(r)/2; i, j = i+1, j-1 {
+        r[i], r[j] = r[j], r[i]
+    }
+    return string(r)
+}
+```
+
+### Fix the double reverse error
 
 
 
