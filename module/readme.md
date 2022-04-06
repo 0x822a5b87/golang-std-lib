@@ -234,10 +234,149 @@ func Reverse(s string) string {
 
 ### Fix the double reverse error
 
+```go
+func Reverse3(s string) (string, error) {
+	if !utf8.ValidString(s) {
+		return s, errors.New("input is not valid UTF-8")
+	}
+	r := []rune(s)
+	for i, j := 0, len(r)-1; i < len(r)/2; i, j = i+1, j-1 {
+		r[i], r[j] = r[j], r[i]
+	}
+	return string(r), nil
+}
+```
+
+```go
+func FuzzReverse(f *testing.F) {
+	testcases := []string{"Hello, world", " ", "!12345"}
+	for _, tc := range testcases {
+		f.Add(tc) // Use f.Add to provide a seed corpus
+	}
+	f.Fuzz(func(t *testing.T, orig string) {
+		rev, err1 := Reverse3(orig)
+		if err1 != nil {
+			return
+		}
+		doubleRev, err2 := Reverse3(rev)
+		if err2 != nil {
+			return
+		}
+		if orig != doubleRev {
+			t.Errorf("Before: %q, after: %q", orig, doubleRev)
+		}
+		if utf8.ValidString(orig) && !utf8.ValidString(rev) {
+			t.Errorf("Reverse produced invalid UTF-8 string %q", rev)
+		}
+	})
+}
+```
+
+## Tutorial: Getting started with generics
+
+> This tutorial introduces the basics of generics in Go. With generics, you can declare and use functions or types that are written to work with any of a set of types provided by calling code.
+
+### Add a generic function to handle multiple types
+
+```go
+// SumIntsOrFloats sums the values of map m. It supports both int64 and float64
+// as types for map values.
+func SumIntsOrFloats[K comparable, V int64 | float64](m map[K]V) V {
+    var s V
+    for _, v := range m {
+        s += v
+    }
+    return s
+}
+```
+
+```go
+// SumIntsOrFloats sums the values of map m. It supports both int64 and float64
+// as types for map values.
+func SumIntsOrFloats[K comparable, V int64 | float64](m map[K]V) V {
+	var s V
+	for _, v := range m {
+		s += v
+	}
+	return s
+}
+
+func main() {
+	// Initialize a map for the integer values
+	ints := map[string]int64{
+		"first":  34,
+		"second": 12,
+	}
+
+	// Initialize a map for the float values
+	floats := map[string]float64{
+		"first":  35.98,
+		"second": 26.99,
+	}
+
+	fmt.Printf("Non-Generic Sums: %v and %v\n",
+		SumInts(ints),
+		SumFloats(floats))
+
+	fmt.Printf("Generic Sums: %v and %v\n",
+		SumIntsOrFloats[string, int64](ints),
+		SumIntsOrFloats[string, float64](floats))
+}
+```
+
+### Declare a type constraint
+
+> **You declare a *type constraint* as an interface.**The constraint allows any type implementing the interface. For example, if you declare a type constraint interface with three methods, then use it with a type parameter in a generic function, type arguments used to call the function must have all of those methods.
+
+```go
+package main
+
+type Number interface {
+	int64 | float64
+}
+
+// SumNumbers sums the values of map m. It supports both integers
+// and floats as map values.
+func SumNumbers[K string, V Number](m map[K]V) V {
+	var s V
+	for _, v := range m {
+		s += v
+	}
+	return s
+}
+```
 
 
-## Naming a module
 
-> When you run go mod init to create a module for tracking dependencies, you specify a module path that serves as the module’s name. 
->
-> **The module path becomes the import path prefix for packages in the module.**Be sure to specify a module path that won’t conflict with the module path of other modules.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
