@@ -346,6 +346,45 @@ func SumNumbers[K string, V Number](m map[K]V) V {
 }
 ```
 
+## Managing dependencies
+
+### Developing and testing against unpublished module code
+
+#### Requiring module code in a local directory
+
+```go
+module example.com/mymodule
+
+go 1.16
+
+require example.com/theirmodule v0.0.0-unpublished
+
+replace example.com/theirmodule v0.0.0-unpublished => ../theirmodule
+```
+
+#### Requiring external module code from your own repository fork
+
+```go
+module example.com/mymodule
+
+go 1.16
+
+require example.com/theirmodule v1.2.3
+
+replace example.com/theirmodule v1.2.3 => example.com/myfork/theirmodule v1.2.3-fixed
+```
+
+#### Getting a specific commit using a repository identifier
+
+```go
+// To get the module at a specific commit, append the form @commithash:
+go get example.com/theirmodule@4cf76c2
+// To get the module at a specific branch, append the form @branchname:
+go get example.com/theirmodule@bugfixes
+```
+
+### Specifying a module proxy server
+
 
 
 
