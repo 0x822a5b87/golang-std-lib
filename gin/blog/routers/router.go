@@ -6,6 +6,8 @@ import (
 	"gin/blog/routers/api"
 	v1 "gin/blog/routers/api/v1"
 	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
 func InitRouter() *gin.Engine {
@@ -18,7 +20,9 @@ func InitRouter() *gin.Engine {
 
 	apiV1 := r.Group("/api/v1")
 	apiV1.Use(jwt.JWT())
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	{
+
 		//获取标签列表
 		apiV1.GET("/tags", v1.GetTags)
 		//新建标签
