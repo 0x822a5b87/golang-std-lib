@@ -1,0 +1,45 @@
+2022-08-19 14:50:05.229642Z	info	statReport	monitor/stat_monitor.go:543	DA98E561-7AA4-4AF5-B955-6158355A9FFC, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 14:50:06.229964Z	error	statReport	monitor/stat_monitor.go:553	DA98E561-7AA4-4AF5-B955-6158355A9FFC, after sleep 1s, discover still not ready, skip first report config
+2022-08-19 14:53:18.719279Z	info	statReport	monitor/stat_monitor.go:543	A931C706-7373-4373-B901-598A60008BDD, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:15:08.949209Z	info	statReport	monitor/stat_monitor.go:543	25296662-52D7-48FF-A204-AB1218BDF07E, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:15:10.121625Z	info	statReport	monitor/stat_monitor.go:596	Success to report sdk Config, resp is id:<value:"25296662-52D7-48FF-A204-AB1218BDF07E" > code:<value:200000 > info:<value:"receive success" > , monitor server is {ID: 1307097008, Address: 11.154.192.73:8081}
+2022-08-19 16:17:52.489534Z	info	statReport	monitor/stat_monitor.go:543	5D6D9483-A568-450B-A8A5-2C6F174CA2F4, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:17:53.787911Z	info	statReport	monitor/stat_monitor.go:596	Success to report sdk Config, resp is id:<value:"5D6D9483-A568-450B-A8A5-2C6F174CA2F4" > code:<value:200000 > info:<value:"receive success" > , monitor server is {ID: 2019833905, Address: 9.136.69.245:8081}
+2022-08-19 16:21:02.780180Z	info	statReport	monitor/stat_monitor.go:543	6A1EE13F-6B2C-4F37-B5BE-83FB9AF7D7C7, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:21:38.178312Z	info	statReport	monitor/stat_monitor.go:543	C13C9699-DAD9-4553-B126-CFFC6D1DA958, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:21:39.395660Z	info	statReport	monitor/stat_monitor.go:596	Success to report sdk Config, resp is id:<value:"C13C9699-DAD9-4553-B126-CFFC6D1DA958" > code:<value:200000 > info:<value:"receive success" > , monitor server is {ID: 1853110856, Address: 11.181.41.35:8081}
+2022-08-19 16:21:58.220276Z	info	statReport	monitor/stat_monitor.go:543	EB7CCC7B-29B2-4C5A-9B03-9778EB31919B, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:21:59.535386Z	info	statReport	monitor/stat_monitor.go:596	Success to report sdk Config, resp is id:<value:"EB7CCC7B-29B2-4C5A-9B03-9778EB31919B" > code:<value:200000 > info:<value:"receive success" > , monitor server is {ID: 249766272, Address: 11.181.43.109:8081}
+2022-08-19 16:22:07.651477Z	info	statReport	monitor/stat_monitor.go:543	FD25DD44-A3B2-43B7-8A49-B5E0C70D89C1, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:22:08.845762Z	info	statReport	monitor/stat_monitor.go:596	Success to report sdk Config, resp is id:<value:"FD25DD44-A3B2-43B7-8A49-B5E0C70D89C1" > code:<value:200000 > info:<value:"receive success" > , monitor server is {ID: 3545469522, Address: 11.181.41.72:8081}
+2022-08-19 16:22:51.608168Z	info	statReport	monitor/stat_monitor.go:543	E1249EDA-F0C7-4D50-825F-7676F01C4B9D, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:22:52.916161Z	info	statReport	monitor/stat_monitor.go:596	Success to report sdk Config, resp is id:<value:"E1249EDA-F0C7-4D50-825F-7676F01C4B9D" > code:<value:200000 > info:<value:"receive success" > , monitor server is {ID: 3914568846, Address: 9.141.110.43:8081}
+2022-08-19 16:31:12.728859Z	info	statReport	monitor/stat_monitor.go:543	38B2D34C-F363-4A47-9050-3E75227DF9F5, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:32:00.688325Z	info	statReport	monitor/stat_monitor.go:543	A5AED062-B313-4401-ACA4-A9E95DB9D276, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:32:33.185321Z	info	statReport	monitor/stat_monitor.go:543	316246E1-2039-46A9-96CB-722D38B4ECEB, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:39:17.356244Z	info	statReport	monitor/stat_monitor.go:543	266073C5-C3F7-4B12-B0EF-91876C685682, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:40:12.331184Z	info	statReport	monitor/stat_monitor.go:543	C49AAFFE-D516-4395-A78A-E797C8087D1B, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:40:34.708909Z	info	statReport	monitor/stat_monitor.go:543	60F03BAE-E132-46AC-895C-F85E1456E20D, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:40:56.324614Z	info	statReport	monitor/stat_monitor.go:543	DFCE85E4-B968-4550-B997-F5FF8FFE0799, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:41:02.203461Z	info	statReport	monitor/stat_monitor.go:543	3071C65D-C56A-4E81-92FF-2B26FA45C2DF, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:41:45.265294Z	info	statReport	monitor/stat_monitor.go:543	16769801-A9E2-45AF-956B-C16257BAAE53, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:41:53.928930Z	info	statReport	monitor/stat_monitor.go:543	61BC7003-B11F-47C3-B776-22E955E729FF, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:43:04.611192Z	info	statReport	monitor/stat_monitor.go:543	81EC5BE0-9D0B-48A1-AFAC-D31FADDB5AFE, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:43:42.084146Z	info	statReport	monitor/stat_monitor.go:543	DCC52C84-7A43-4398-A6C9-1637CDE3DA05, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:44:02.050922Z	info	statReport	monitor/stat_monitor.go:543	681A84FB-848B-4021-8887-F13DD8762875, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:44:22.782147Z	info	statReport	monitor/stat_monitor.go:543	95F08306-4367-437F-A8A4-B01CBF479A5F, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:44:23.782306Z	error	statReport	monitor/stat_monitor.go:553	95F08306-4367-437F-A8A4-B01CBF479A5F, after sleep 1s, discover still not ready, skip first report config
+2022-08-19 16:46:53.376242Z	info	statReport	monitor/stat_monitor.go:543	E14FBDB2-5AB1-428C-8CDA-7B3610748ABA, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:46:54.681802Z	info	statReport	monitor/stat_monitor.go:596	Success to report sdk Config, resp is id:<value:"E14FBDB2-5AB1-428C-8CDA-7B3610748ABA" > code:<value:200000 > info:<value:"receive success" > , monitor server is {ID: 2449652664, Address: 9.141.71.53:8081}
+2022-08-19 16:47:15.285263Z	info	statReport	monitor/stat_monitor.go:543	0D31F7F9-812C-45EC-8ACF-DDBE9E49E87C, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:47:18.566490Z	error	statReport	monitor/stat_monitor.go:553	0D31F7F9-812C-45EC-8ACF-DDBE9E49E87C, after sleep 1s, discover still not ready, skip first report config
+2022-08-19 16:47:57.054956Z	info	statReport	monitor/stat_monitor.go:543	990096A6-AF46-4600-8CEB-5CA8D6B091A8, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:47:58.055468Z	error	statReport	monitor/stat_monitor.go:553	990096A6-AF46-4600-8CEB-5CA8D6B091A8, after sleep 1s, discover still not ready, skip first report config
+2022-08-19 16:48:11.084995Z	info	statReport	monitor/stat_monitor.go:543	91B206A3-90D0-4F81-A36D-15195AD0E171, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:48:12.301182Z	error	statReport	monitor/stat_monitor.go:553	91B206A3-90D0-4F81-A36D-15195AD0E171, after sleep 1s, discover still not ready, skip first report config
+2022-08-19 16:49:11.619533Z	info	statReport	monitor/stat_monitor.go:246	start to upload stat info to monitor
+2022-08-19 16:50:44.445711Z	info	statReport	monitor/stat_monitor.go:543	9132FDEC-B135-4367-A7A6-D500956EC8E9, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:50:45.446267Z	error	statReport	monitor/stat_monitor.go:553	9132FDEC-B135-4367-A7A6-D500956EC8E9, after sleep 1s, discover still not ready, skip first report config
+2022-08-19 16:52:04.098694Z	info	statReport	monitor/stat_monitor.go:543	1A734133-43F6-48FC-B8CF-53E87A394D56, discover not ready, sleep 1s to wait discover ready to report config
+2022-08-19 16:52:05.270839Z	error	statReport	monitor/stat_monitor.go:553	1A734133-43F6-48FC-B8CF-53E87A394D56, after sleep 1s, discover still not ready, skip first report config
+2022-08-19 16:55:43.851004Z	info	statReport	monitor/stat_monitor.go:543	C3DA9BEC-CA8F-4BBD-87D4-B17B36AF7E5A, discover not ready, sleep 1s to wait discover ready to report config
