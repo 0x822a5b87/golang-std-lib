@@ -166,8 +166,12 @@ git.code.oa.com/trpc-go/trpc-naming-polaris v0.2.2/go.mod h1:0s3dgIzTiGURWt+YQja
 git.code.oa.com/trpc-go/trpc-selector-cl5 v0.1.0/go.mod h1:CKvimVtWwqxPblliXKwH3syHJmo0MpEkensbNYG0jDE=
 git.woa.com/jce/jce v1.2.0 h1:o75OgZYPg2+AWtF3m7YkC6lISOKtMmuj3H2UzD6e8Rg=
 git.woa.com/jce/jce v1.2.0/go.mod h1:tDEP7kGD+54CmvikQ3n5CS3YYwzSkiqKgXdOhFKpvq0=
+git.woa.com/pdata/common v0.0.0-20220106144018-d9ef8b4dc6fa/go.mod h1:RlO+f7mYFxVp2Po7EQQKAlbVmmxzglfsmPRK4S20JgA=
+git.woa.com/pdata/common v0.0.0-20220816113149-c050ea7ef469 h1:tPH3U8f4j72fE3kBAkKkAX0VmaCsJW8hhIrWgEK2soI=
+git.woa.com/pdata/common v0.0.0-20220816113149-c050ea7ef469/go.mod h1:FKdXiAVkyFVytEsPIKPaBegHSd8lQgBzhT9+9IoV3l4=
 git.woa.com/pdata/common/glitch v0.0.0-20211231092101-59fc8cf9b016 h1:Ysg/NAByS7zl1zMG+V2fkMw5YawFtraUHHa4fVkpPYg=
 git.woa.com/pdata/common/glitch v0.0.0-20211231092101-59fc8cf9b016/go.mod h1:n31a1LhIUGYdFZ0w9J67yynwMNvTRtC+W47jciS4/mA=
+git.woa.com/pdata/slog v0.0.0-20220106142640-6059b0109962/go.mod h1:xR1CCafPLkiVqaUAkLKaXlxJ+Wd7SCf5cuMrbJp06hc=
 git.woa.com/pdata/slog v0.0.0-20220814163738-78ae8c3bced0 h1:eS1YSIAW9N57mzNtAR8LnZIDn8OZQgYS/zJP9vMliK4=
 git.woa.com/pdata/slog v0.0.0-20220814163738-78ae8c3bced0/go.mod h1:sp+s1t2iMEKRp2o2mB28j1ZJSJtRTuC0F7tiUGp8c5A=
 git.woa.com/trpc-go/go_reuseport v1.7.0/go.mod h1:5mVq/Xi5sRvmB/Myvjp3dn6zN7F/bIJwPSGBffUdqTc=

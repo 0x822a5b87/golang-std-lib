@@ -2,8 +2,6 @@ module 0x822a5b87/tx
 
 go 1.18
 
-replace git.woa.com/pdata/common => /Users/dhy/code/business_interface_dev/common
-
 require (
 	git.woa.com/pdata/common v0.0.0-20220816113149-c050ea7ef469
 	git.woa.com/pdata/slog v0.0.0-20220814163738-78ae8c3bced0
