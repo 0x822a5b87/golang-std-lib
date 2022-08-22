@@ -41,6 +41,7 @@ func init() {
 func ProcessSendRawMsg() {
 	for i := 1; i <= batchSize; i++ {
 		tdBankReport.SendRawMsg(tid, []byte(message))
+		fmt.Println("send message, tid = " + tid + ", message = " + message)
 	}
 }
 
