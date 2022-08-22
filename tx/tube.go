@@ -39,9 +39,17 @@ func init() {
 }
 
 func ProcessSendRawMsg() {
+	go processError()
 	for i := 1; i <= 2*batchSize; i++ {
 		tube.SendRawMsg(tid, []byte(message))
 		fmt.Println("send message bid = [" + bid + "], tid = [" + tid + "], message = [" + message + "]")
+	}
+}
+
+func processError() {
+	messages := tube.Error()
+	for m := range messages {
+		fmt.Println("error message, tid = " + m.TID + ", Content = " + string(m.Content))
 	}
 }
 
