@@ -18,6 +18,8 @@ var message string
 var tube *tdbank.Reporter
 
 func init() {
+	slog.SetOutLevel(slog.DebugLevel)
+	slog.Debug("hello xxx")
 	tdbank.UseLog()
 	tdbank.SetTableSchema(bid, tid, strings.Split(schema, ","))
 	config := tdbank.Config{
@@ -42,7 +44,7 @@ func ProcessSendRawMsg() {
 	go processError()
 	for i := 1; i <= 2*batchSize; i++ {
 		tube.SendRawMsg(tid, []byte(message))
-		fmt.Println("send message bid = [" + bid + "], tid = [" + tid + "], message = [" + message + "]")
+		fmt.Println("SendRawMsg bid = [" + bid + "], tid = [" + tid + "], message = [" + message + "]")
 	}
 }
 
