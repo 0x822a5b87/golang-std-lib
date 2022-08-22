@@ -15,7 +15,7 @@ var batchSize int
 var defaultHost string
 var message string
 
-var tdBankReport *tdbank.Reporter
+var tube *tdbank.Reporter
 
 func init() {
 	tdbank.UseLog()
@@ -31,7 +31,7 @@ func init() {
 		SendBatch:   batchSize,
 	}
 	var err error
-	tdBankReport, err = tdbank.NewReporter(config)
+	tube, err = tdbank.NewReporter(config)
 	if err != nil {
 		slog.Error(err, "初始化Reporter出错")
 		panic("初始化Reporter出错")
@@ -39,9 +39,9 @@ func init() {
 }
 
 func ProcessSendRawMsg() {
-	for i := 1; i <= batchSize; i++ {
-		tdBankReport.SendRawMsg(tid, []byte(message))
-		fmt.Println("send message, tid = " + tid + ", message = " + message)
+	for i := 1; i <= 2*batchSize; i++ {
+		tube.SendRawMsg(tid, []byte(message))
+		fmt.Println("send message bid = [" + bid + "], tid = [" + tid + "], message = [" + message + "]")
 	}
 }
 
