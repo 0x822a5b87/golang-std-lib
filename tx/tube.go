@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"git.woa.com/pdata/common/tdbank"
+	"git.woa.com/pdata/common/utils/timeutil"
 	"git.woa.com/pdata/slog"
 	"strings"
 	"time"
@@ -14,12 +15,12 @@ var schema string
 var batchSize int
 var defaultHost string
 var message string
+var sleep time.Duration
 
 var tube *tdbank.Reporter
 
 func init() {
 	slog.SetOutLevel(slog.DebugLevel)
-	slog.Debug("hello xxx")
 	tdbank.UseLog()
 	tdbank.SetTableSchema(bid, tid, strings.Split(schema, ","))
 	config := tdbank.Config{
@@ -42,10 +43,13 @@ func init() {
 
 func ProcessSendRawMsg() {
 	go processError()
+	s := message + "|" + timeutil.NowStrWithShLoc(timeutil.TimeLayout)
 	for i := 1; i <= 2*batchSize; i++ {
-		tube.SendRawMsg(tid, []byte(message))
-		fmt.Println("SendRawMsg bid = [" + bid + "], tid = [" + tid + "], message = [" + message + "]")
+		tube.SendRawMsg(tid, []byte(s))
+		fmt.Println("SendRawMsg bid = [" + bid + "], tid = [" + tid + "], message = [" + s + "]")
 	}
+
+	tube.Lock()
 }
 
 func processError() {
@@ -58,6 +62,6 @@ func processError() {
 func main() {
 	fmt.Println("start tube sender!")
 	ProcessSendRawMsg()
-	time.Sleep(10 * time.Second)
+	time.Sleep(sleep * time.Second)
 	fmt.Println("end tube sender!")
 }
