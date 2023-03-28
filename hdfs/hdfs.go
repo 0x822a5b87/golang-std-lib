@@ -27,12 +27,15 @@ func main() {
 	option.Addresses = []string{address}
 	u, _ := user.Current()
 	option.User = u.Username
-	client, err := hdfs.NewClient(option)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	defer client.Close()
+	//client, err := hdfs.NewClient(option)
+	//if err != nil {
+	//	fmt.Println("err create new client")
+	//	fmt.Println(err.Error())
+	//	return
+	//}
+	//defer client.Close()
+
+	client, _ := hdfs.New("qy-ieg-4-v2-nn-1.tencent-distribute.com:9000")
 
 	dir, err := client.ReadDir(path)
 	if err != nil {
