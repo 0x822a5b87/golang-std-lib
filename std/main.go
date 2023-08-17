@@ -1,25 +1,13 @@
 package main
 
-// Sink is the interface of a data sink
-type Sink interface {
-	Write(event string) error
-	Close()
-}
+import (
+	"fmt"
+	"net/url"
+)
 
-type baseSink struct {
-}
-
-func (s *baseSink) Write(event string) error {
-	// DO SINK
-	return nil
-}
-
-func (s *baseSink) Close() {
-	// DO CLOSE
-}
+var sql = "insert+table+dws_w_jdqssy_all_round_di%28%0A++++dtstatdate%2C%0A++++seasonid%2C%0A++++seasonname%2C%0A++++vopenid%2C%0A++++mode%2C%0A++++modename%2C%0A++++submode%2C%0A++++submodename%2C%0A++++%60map%60%2C%0A++++mapname%2C%0A++++roundcnt%2C%0A++++roundtime%2C%0A++++survivaltime%2C%0A++++tablename%2C%0A++++dau%0A++++%29%0A++++select+%0A++++%2720230408%27+as+dtstatdate%2C%0A++++28+as+seasonid%2C%0A++++%27SS22%E8%B5%9B%E5%AD%A3%27+as+seasonname%2C%0A++++a.vopenid%2C%0A++++a.mode%2C%0A++++case+when+a.tablename%3D%27playermatchflow%27+then+%27%E7%BB%BF%E6%B4%B2%27%0A++++when+a.tablename%3D%27secwerewolfendflow%27+then+%27%E5%86%85%E9%AC%BC%27%0A++++else+b.modename+end+as+modename%2C%0A++++a.submode%2C%0A++++case+when+a.tablename%3D%27playermatchflow%27+then+%27%E7%BB%BF%E6%B4%B2%27%0A++++when+a.tablename%3D%27secwerewolfendflow%27+then+%27%E5%86%85%E9%AC%BC%27%0A++++else+c.submodename+end+as+submodename%2C%0A++++a.%60map%60%2C%0A++++c.mapname%2C%0A++++roundcnt%2Croundtime%2Csurvivaltime%2Ca.tablename%2C%0A++++47213645+as+dau+%0A++++from%0A++++%28%0A++++++++select+vopenid%2Cmode%2Csubmode%2C%60map%60%2Ccount%28DISTINCT+BattleID%29+as+roundcnt%2Csum%28roundtime%29+as+roundtime%2Csum%28survivaltime%29+as+survivaltime%2C%27roundflow%27+tablename%2Cmax%28seasonid%29+seasonid+from+ieg_tdbank%3A%3Ajdqssy_dsl_roundflow_fht0+where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A++++++++GROUP+by+vopenid%2Cmode%2Csubmode%2C%60map%60%0A++++++++union+ALL%0A++++++++select+vopenid%2Cmode%2Csubmode%2C%60map%60%2Ccount%28DISTINCT+BattleID%29+as+roundcnt%2Csum%28roundtime%29+as+roundtime%2Csum%28survivaltime%29+as+survivaltime%2C%27funnymoderoundflow%27+tablename%2C0+seasonid+from+ieg_tdbank%3A%3Ajdqssy_dsl_funnymoderoundflow_fht0+where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A++++++++GROUP+by+vopenid%2Cmode%2Csubmode%2C%60map%60%0A++++++++union+ALL%0A++++++++select+vopenid%2Cmode%2Csubmode%2C%60map%60%2Ccount%28DISTINCT+BattleID%29+as+roundcnt%2Csum%28roundtime%29+as+roundtime%2Csum%28roundtime%29+as+survivaltime%2C%27vsteamroundflow%27+tablename%2C0+seasonid+from+ieg_tdbank%3A%3Ajdqssy_dsl_vsteamroundflow_fht0+where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A++++++++GROUP+by+vopenid%2Cmode%2Csubmode%2C%60map%60%0A++++++++union+ALL%0A++++++++select+vopenid%2Cmode%2Csubmode%2C%60map%60%2Ccount%28DISTINCT+BattleID%29+as+roundcnt%2Csum%28roundtime%29+as+roundtime%2Csum%28roundtime%29+as+survivaltime%2C%27peakroundflow%27+tablename%2C0+seasonid+from+ieg_tdbank%3A%3Ajdqssy_dsl_peakroundflow_fht0+where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A++++++++GROUP+by+vopenid%2Cmode%2Csubmode%2C%60map%60%0A++++++++%0A%09%09union+ALL%0A%09%09select+%0A%09%09%09a.vopenid%2Ca.mode%2Cnull+submode%2Cnull+%60map%60%2Ccount%28DISTINCT+a.battleid%29+as+roundcnt%2Csum%28b.roundtime%29+as+roundtime%2Csum%28b.roundtime%29+as+survivaltime%2C%27playermatchflow%27+tablename%2C0+seasonid%0A%09%09from+%0A%09%09%09%28select+%0A%09%09%09%09vGameAppID%2CPlatID%2Cvopenid%2C+matchmode+as+mode%2Cgameid+as+battleid%0A%09%09%09from+ieg_tdbank%3A%3Ajdqssy_dsl_playermatchflow_fht0+%0A%09%09%09where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A%09%09%09and+matchmode+%3D+1003+%0A%09%09%09group+by+vGameAppID%2C+PlatID%2C+vopenid%2Cmatchmode%2Cgameid+%0A%09%09%09%29a+%0A%09%09left+join+%0A%09%09%09%28select+vGameAppID%2C+PlatID%2Cvopenid%2Cbattleid%2Csum%28roundtime%29+as+roundtime+%0A%09%09%09from+ieg_tdbank%3A%3Ajdqssy_dsl_ugcgameresultflow_fht0+%0A%09%09%09where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A%09%09%09group+by+vGameAppID%2C+PlatID%2C+vopenid%2C+battleid+%0A%09%09%09%29b+%0A%09%09on+a.battleid%3Db.battleid+and+a.vGameAppID+%3D+b.vGameAppID+and+a.PlatID+%3D+b.PlatID+and+a.vopenid+%3D+b.vopenid+%0A%09%09group+by+a.vopenid%2Ca.mode%0A++++++++%0A%09%09union+ALL%0A%09%09select+openid+vopenid%2Cnull+mode%2Cnull+submode%2Cnull+%60map%60%2Ccount%28DISTINCT+BattleID%29+as+roundcnt%2Csum%28roundtime%29+as+roundtime%2Csum%28roundtime%29+as+survivaltime%2C%27secwerewolfendflow%27+tablename%2C0+seasonid+from+ieg_tdbank%3A%3Ajdqssy_dsl_secwerewolfendflow_fht0+where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A++++++++GROUP+by+openid%0A++++%29a%0A++++left+join+jdqssy_mode_ret_conf+b+on+a.tablename%3Db.tablename+and+a.mode%3Db.mode%0A++++left+join+jdqssy_submode_map_ret_conf+c+on+a.submode%3Dc.submode"
 
 func main() {
-	sink := baseSink{}
-	sink.Write("test")
-	sink.Close()
+	sql, _ = url.QueryUnescape(sql)
+	fmt.Println(sql)
 }
