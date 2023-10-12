@@ -5,9 +5,53 @@ import (
 	"net/url"
 )
 
-var sql = "insert+table+dws_w_jdqssy_all_round_di%28%0A++++dtstatdate%2C%0A++++seasonid%2C%0A++++seasonname%2C%0A++++vopenid%2C%0A++++mode%2C%0A++++modename%2C%0A++++submode%2C%0A++++submodename%2C%0A++++%60map%60%2C%0A++++mapname%2C%0A++++roundcnt%2C%0A++++roundtime%2C%0A++++survivaltime%2C%0A++++tablename%2C%0A++++dau%0A++++%29%0A++++select+%0A++++%2720230408%27+as+dtstatdate%2C%0A++++28+as+seasonid%2C%0A++++%27SS22%E8%B5%9B%E5%AD%A3%27+as+seasonname%2C%0A++++a.vopenid%2C%0A++++a.mode%2C%0A++++case+when+a.tablename%3D%27playermatchflow%27+then+%27%E7%BB%BF%E6%B4%B2%27%0A++++when+a.tablename%3D%27secwerewolfendflow%27+then+%27%E5%86%85%E9%AC%BC%27%0A++++else+b.modename+end+as+modename%2C%0A++++a.submode%2C%0A++++case+when+a.tablename%3D%27playermatchflow%27+then+%27%E7%BB%BF%E6%B4%B2%27%0A++++when+a.tablename%3D%27secwerewolfendflow%27+then+%27%E5%86%85%E9%AC%BC%27%0A++++else+c.submodename+end+as+submodename%2C%0A++++a.%60map%60%2C%0A++++c.mapname%2C%0A++++roundcnt%2Croundtime%2Csurvivaltime%2Ca.tablename%2C%0A++++47213645+as+dau+%0A++++from%0A++++%28%0A++++++++select+vopenid%2Cmode%2Csubmode%2C%60map%60%2Ccount%28DISTINCT+BattleID%29+as+roundcnt%2Csum%28roundtime%29+as+roundtime%2Csum%28survivaltime%29+as+survivaltime%2C%27roundflow%27+tablename%2Cmax%28seasonid%29+seasonid+from+ieg_tdbank%3A%3Ajdqssy_dsl_roundflow_fht0+where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A++++++++GROUP+by+vopenid%2Cmode%2Csubmode%2C%60map%60%0A++++++++union+ALL%0A++++++++select+vopenid%2Cmode%2Csubmode%2C%60map%60%2Ccount%28DISTINCT+BattleID%29+as+roundcnt%2Csum%28roundtime%29+as+roundtime%2Csum%28survivaltime%29+as+survivaltime%2C%27funnymoderoundflow%27+tablename%2C0+seasonid+from+ieg_tdbank%3A%3Ajdqssy_dsl_funnymoderoundflow_fht0+where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A++++++++GROUP+by+vopenid%2Cmode%2Csubmode%2C%60map%60%0A++++++++union+ALL%0A++++++++select+vopenid%2Cmode%2Csubmode%2C%60map%60%2Ccount%28DISTINCT+BattleID%29+as+roundcnt%2Csum%28roundtime%29+as+roundtime%2Csum%28roundtime%29+as+survivaltime%2C%27vsteamroundflow%27+tablename%2C0+seasonid+from+ieg_tdbank%3A%3Ajdqssy_dsl_vsteamroundflow_fht0+where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A++++++++GROUP+by+vopenid%2Cmode%2Csubmode%2C%60map%60%0A++++++++union+ALL%0A++++++++select+vopenid%2Cmode%2Csubmode%2C%60map%60%2Ccount%28DISTINCT+BattleID%29+as+roundcnt%2Csum%28roundtime%29+as+roundtime%2Csum%28roundtime%29+as+survivaltime%2C%27peakroundflow%27+tablename%2C0+seasonid+from+ieg_tdbank%3A%3Ajdqssy_dsl_peakroundflow_fht0+where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A++++++++GROUP+by+vopenid%2Cmode%2Csubmode%2C%60map%60%0A++++++++%0A%09%09union+ALL%0A%09%09select+%0A%09%09%09a.vopenid%2Ca.mode%2Cnull+submode%2Cnull+%60map%60%2Ccount%28DISTINCT+a.battleid%29+as+roundcnt%2Csum%28b.roundtime%29+as+roundtime%2Csum%28b.roundtime%29+as+survivaltime%2C%27playermatchflow%27+tablename%2C0+seasonid%0A%09%09from+%0A%09%09%09%28select+%0A%09%09%09%09vGameAppID%2CPlatID%2Cvopenid%2C+matchmode+as+mode%2Cgameid+as+battleid%0A%09%09%09from+ieg_tdbank%3A%3Ajdqssy_dsl_playermatchflow_fht0+%0A%09%09%09where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A%09%09%09and+matchmode+%3D+1003+%0A%09%09%09group+by+vGameAppID%2C+PlatID%2C+vopenid%2Cmatchmode%2Cgameid+%0A%09%09%09%29a+%0A%09%09left+join+%0A%09%09%09%28select+vGameAppID%2C+PlatID%2Cvopenid%2Cbattleid%2Csum%28roundtime%29+as+roundtime+%0A%09%09%09from+ieg_tdbank%3A%3Ajdqssy_dsl_ugcgameresultflow_fht0+%0A%09%09%09where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A%09%09%09group+by+vGameAppID%2C+PlatID%2C+vopenid%2C+battleid+%0A%09%09%09%29b+%0A%09%09on+a.battleid%3Db.battleid+and+a.vGameAppID+%3D+b.vGameAppID+and+a.PlatID+%3D+b.PlatID+and+a.vopenid+%3D+b.vopenid+%0A%09%09group+by+a.vopenid%2Ca.mode%0A++++++++%0A%09%09union+ALL%0A%09%09select+openid+vopenid%2Cnull+mode%2Cnull+submode%2Cnull+%60map%60%2Ccount%28DISTINCT+BattleID%29+as+roundcnt%2Csum%28roundtime%29+as+roundtime%2Csum%28roundtime%29+as+survivaltime%2C%27secwerewolfendflow%27+tablename%2C0+seasonid+from+ieg_tdbank%3A%3Ajdqssy_dsl_secwerewolfendflow_fht0+where+tdbank_imp_date%3E%3D%272023040800%27+and+tdbank_imp_date%3C%3D%272023040823%27%0A++++++++GROUP+by+openid%0A++++%29a%0A++++left+join+jdqssy_mode_ret_conf+b+on+a.tablename%3Db.tablename+and+a.mode%3Db.mode%0A++++left+join+jdqssy_submode_map_ret_conf+c+on+a.submode%3Dc.submode"
-
 func main() {
-	sql, _ = url.QueryUnescape(sql)
-	fmt.Println(sql)
+	str1 := "select Name,Age from login;"
+	str2 := "select sex,Name,Age,Value,message from login;"
+
+	set1 := convertToSet(str1)
+	set2 := convertToSet(str2)
+
+	intersection := getIntersection(set1, set2)
+	union := getUnion(set1, set2)
+
+	similarity := float64(len(intersection)) / float64(len(union))
+
+	fmt.Printf("Similarity: %.2f%%\n", similarity*100)
+
+	message := "insert+table+jk_mid_tbregister_channel%0A%28dtstatdate%2Cvgameappid%2Cplatid%2Cvopenid%2Clevel%2Cdregdate%2Cregchannel%2Cimei%2Cdtfirsttime%2Cdtfirsteffecttime%29%0ASELECT+%2720230905%27+as+dtstatdate%0A%2Cnvl%28a.vGameAppID%2Cb.vGameAppID%29+as+vGameAppID%0A%2Cnvl%28b.PlatID%2Ca.PlatID%29+as+PlatID%0A%2Cnvl%28a.vOpenID%2Cb.vOpenID%29+as+vOpenID%0A%2Cnvl%28a.level%2Cb.level%29+as+level%0A%2Cif%28b.vGameAppID+is+not+null%2Cb.dregdate%2C%2720230905%27%29+as+dregdate%0A%2Cif%28b.regchannel+is+null+or+b.regchannel+%3D+0%2Cnvl%28a.loginchannel%2C0%29%2Cb.regchannel%29+as+regchannel%0A%2Cif%28b.imei+is+not+null%2Cb.imei%2Ca.imei%29+as+imei%0A%2Cif%28b.vGameAppID+is+not+null%2Cb.dtfirsttime%2Ca.dtstattime%29+as+dtfirsttime%0A%2Cif%28b.regchannel%3D0%2Ca.dtstattime%2Cb.dtfirsteffecttime%29+as+dtfirsteffecttime%0AFROM+%0A%28%09%0A%09select+vgameappid%2Cplatid%2Cvopenid%2Clevel%2Cloginchannel%2Cimei%2Cdtstattime%0A%09from%0A%09%28%09%0A%09select%0A%09%09vgameappid%2Cplatid%2Cvopenid%2Clevel%2Cloginchannel%2Cimei%2Cdtstattime%0A%09%09%2Crow_number%28%29+over%28partition+by+vgameappid%2Cvopenid+order+by+dtstattime%29+rn%0A%09%09from+jk_mid_tblogin_channel%0A%09%09where+dtstatdate%3D%2720230905%27+and+platid+%3C%3E+255%0A%09%29+t%0A%09where+t.rn+%3D+1%0A%29+a+%0AFULL+OUTER+JOIN+%0A%28select+vgameappid%2Cplatid%2Cvopenid%2Clevel%2Cimei%2Cdregdate%2Cregchannel%2Cdtfirsttime%2Cdtfirsteffecttime+%0A--+from+jk_mid_tbregister_channel+where+dtStatDate%3D%2720230904%27%0Afrom+jk_mid_tbregister_channel+where+dtStatDate%3D%2720230904%27+and+platid+in%280%2C1%29%0A%29+b%0AON+a.vGameAppID%3Db.vGameAppID+AND+a.vOpenID%3Db.vOpenID"
+	message, _ = url.QueryUnescape(message)
+	fmt.Println(message)
+}
+
+// Convert string to character set
+func convertToSet(str string) map[rune]bool {
+	set := make(map[rune]bool)
+	for _, char := range str {
+		set[char] = true
+	}
+	return set
+}
+
+// Get the intersection of two character sets
+func getIntersection(set1, set2 map[rune]bool) map[rune]bool {
+	intersection := make(map[rune]bool)
+	for char := range set1 {
+		if set2[char] {
+			intersection[char] = true
+		}
+	}
+	return intersection
+}
+
+// Get the union of two character sets
+func getUnion(set1, set2 map[rune]bool) map[rune]bool {
+	union := make(map[rune]bool)
+	for char := range set1 {
+		union[char] = true
+	}
+	for char := range set2 {
+		union[char] = true
+	}
+	return union
 }
