@@ -1,3 +1,3 @@
-module github.io/work/function
+module github.com/work/function
 
 go 1.18
