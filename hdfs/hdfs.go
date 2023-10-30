@@ -18,14 +18,22 @@ const (
 	EB                    // 1 << 60
 )
 
+func newClient(nameNode string) (*hdfs.Client, error) {
+	client, err := hdfs.New(nameNode)
+	if err != nil {
+		fmt.Println("err create new client")
+		fmt.Println(err.Error())
+		return nil, err
+	}
+	return client, nil
+}
+
 func get() {
 	address := os.Args[2]
 	path := os.Args[3]
 
-	client, err := hdfs.New(address)
+	client, err := newClient(address)
 	if err != nil {
-		fmt.Println("err create new client")
-		fmt.Println(err.Error())
 		return
 	}
 	defer client.Close()
@@ -65,10 +73,8 @@ func put() {
 	address := os.Args[2]
 	src := os.Args[3]
 	dst := os.Args[4]
-	client, err := hdfs.New(address)
+	client, err := newClient(address)
 	if err != nil {
-		fmt.Println("err create new client")
-		fmt.Println(err.Error())
 		return
 	}
 	defer client.Close()
@@ -84,10 +90,8 @@ func put() {
 func del() {
 	address := os.Args[2]
 	dst := os.Args[3]
-	client, err := hdfs.New(address)
+	client, err := newClient(address)
 	if err != nil {
-		fmt.Println("err create new client")
-		fmt.Println(err.Error())
 		return
 	}
 	defer client.Close()
@@ -103,10 +107,8 @@ func del() {
 func mkdir() {
 	address := os.Args[2]
 	dir := os.Args[3]
-	client, err := hdfs.New(address)
+	client, err := newClient(address)
 	if err != nil {
-		fmt.Println("err create new client")
-		fmt.Println(err.Error())
 		return
 	}
 	defer client.Close()
@@ -117,6 +119,27 @@ func mkdir() {
 	}
 
 	fmt.Printf("mkdir [%s]\n", dir)
+}
+
+func ls() {
+	address := os.Args[2]
+	path := os.Args[3]
+
+	client, err := newClient(address)
+	if err != nil {
+		return
+	}
+	defer client.Close()
+
+	dir, err := client.ReadDir(path)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	for _, fileInfo := range dir {
+		fmt.Printf("file path = :%s\n", fileInfo.Name())
+	}
 }
 
 func main() {
@@ -130,6 +153,8 @@ func main() {
 		del()
 	case "mkdir":
 		mkdir()
+	case "ls":
+		ls()
 	default:
 		fmt.Printf("not supported command : [%s]\n", cmd)
 	}

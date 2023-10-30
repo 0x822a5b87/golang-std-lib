@@ -1,10 +1,9 @@
 package main
 
 import (
-	"gin/blog/runtime"
-	_ "gin/docs"
+	"gin/prom"
 )
 
 func main() {
-	runtime.Server()
+	prom.StartProm()
 }
