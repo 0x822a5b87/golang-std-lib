@@ -1,24 +1,34 @@
 package main
 
 import (
-	"encoding/base64"
 	"fmt"
 	"github.com/pkg/errors"
 )
 
-func function() error {
-	return errors.New("function error")
+var errAnotherThing = errors.New("error doing another thing")
+
+func doAnotherThing() error {
+	return errAnotherThing
+}
+
+func doSomething() error {
+	err := doAnotherThing()
+	return fmt.Errorf("error doing something: %w", err)
 }
 
 func main() {
-	queryString := "SU5TRVJUIFRBQkxFIGFvZW1fZHNsX0ZvZ1dhclRyZWFzdXJlQm94Q3JlYXRlRmxvd19maHQwIFNF TEVDVCAyMDIzMTEwODEwLHdvcmxkaWQsaXAsX190YWJsZW5hbWUsYEdhbWVTdnJJZGAsYGR0RXZl bnRUaW1lYCxgdkdhbWVBcHBpZGAsYFBsYXRJRGAsYGlab25lQXJlYUlEYCxgdm9wZW5pZGAsYGlT ZXF1ZW5jZWAsYHZSb2xlSURgLGBOcGNgLGB0aW1lU3RhbXBgLGByZXF1aXJlZFNlYXNvbklkYCxg ZW50ZXJTZWFzb25UaW1lYCxgcmVxdWlyZWRUYXNrSWRgLGBjb3JvSWRgLGBsb2NrZWRLZXlTZXRg LGByZXF1aXJlZFN0b3J5SWRgLGBzdG9yeVJvdW5kYCxgcmVzZXJ2ZWRJMWAsYHJlc2VydmVkSTJg LGByZXNlcnZlZEkzYCxgcmVzZXJ2ZWRJNGAsYHJlc2VydmVkSTVgLGByZXNlcnZlZEk2YCxgcmVz ZXJ2ZWRJN2AsYHJlc2VydmVkSThgLGByZXNlcnZlZFMxYCxgcmVzZXJ2ZWRTMmAsYHJlc2VydmVk UzNgLGByZXNlcnZlZFM0YCxgc2NlbmVJZGAsYGZvZ1dhckxldmVsYCxgYm94Q29uZklkYCxgYm94 VHlwZWAsYGJveFJlZnJlc2hDb25mSWRgLGBib3hFbnRpdHlJZGAsYHVpZGAsYHBvc1hgLGBwb3NZ YCxgcGFyZW50Qm94RW50aXR5SWRgLGBwYXJlbnRCb3hDb25mSWRgLGBjcmVhdGVSZWFzb25gIEZS T00gdGR3X2ludGVyX2RiOjpleHRfMjAyMzA4MjQxNDM3MjEwOTVfMjAyMzExMDgxMDAwMDBfMTY5 OTQ0MjAwNzE4MA=="
+	err := doSomething()
 
-	// 不知道为啥，出库的SQL中间会有个空格
-	base64Sql := queryString
-	// 对Base64字符串进行解码
-	decodedBytes, err := base64.RawStdEncoding.DecodeString(base64Sql)
-	if err == nil {
-		queryString = string(decodedBytes)
+	fmt.Println(err.Error())
+	fmt.Println(errAnotherThing.Error())
+
+	if errors.Is(err, errAnotherThing) {
+		fmt.Println("Found error!")
 	}
-	fmt.Println(queryString)
+
+	if errors.Is(errAnotherThing, err) {
+		fmt.Println("Found error 2!")
+	}
+
+	fmt.Println(err)
 }
