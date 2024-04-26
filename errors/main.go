@@ -2,33 +2,56 @@ package main
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
+	"sync"
+	"time"
 )
 
-var errAnotherThing = errors.New("error doing another thing")
+var mutex = sync.Mutex{}
+var cond = sync.NewCond(&mutex)
 
-func doAnotherThing() error {
-	return errAnotherThing
+var queue []int
+
+func producer() {
+	i := 0
+	for {
+		cond.L.Lock()
+		queue = append(queue, i)
+		i++
+		cond.L.Unlock()
+
+		cond.Signal()
+		time.Sleep(100 * time.Millisecond)
+	}
 }
 
-func doSomething() error {
-	err := doAnotherThing()
-	return fmt.Errorf("error doing something: %w", err)
+func consumer(consumerName string) {
+	for {
+		cond.L.Lock()
+		for len(queue) == 0 {
+			cond.Wait()
+		}
+
+		fmt.Println(consumerName, queue[0])
+		queue = queue[1:]
+		cond.L.Unlock()
+	}
 }
 
 func main() {
-	err := doSomething()
+	// 开启一个 producer
+	go producer()
 
-	fmt.Println(err.Error())
-	fmt.Println(errAnotherThing.Error())
+	// 开启两个 consumer
+	go consumer("consumer-0")
+	go consumer("consumer-1")
+	go consumer("consumer-2")
+	go consumer("consumer-3")
+	go consumer("consumer-4")
+	go consumer("consumer-5")
+	go consumer("consumer-6")
+	go consumer("consumer-7")
+	go consumer("consumer-8")
+	go consumer("consumer-9")
 
-	if errors.Is(err, errAnotherThing) {
-		fmt.Println("Found error!")
-	}
-
-	if errors.Is(errAnotherThing, err) {
-		fmt.Println("Found error 2!")
-	}
-
-	fmt.Println(err)
+	time.Sleep(1 * time.Minute)
 }
